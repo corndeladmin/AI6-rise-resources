@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "formatters": {
+    "simple_console": {
+      "format": "%(levelname)s - %(message)s"
+    },
+    "file_detail": {
+      "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    }
+  },
+  "handlers": {
+    "console_handler": {
+      "class": "logging.StreamHandler",
+      "formatter": "simple_console",
+      "level": "INFO"
+    },
+    "file_handler": {
+      "class": "logging.FileHandler",
+      "formatter": "file_detail",
+      "filename": "basic_config_log.log",
+      "mode": "a",
+      "level": "DEBUG"
+    }
+  },
+  "loggers": {
+    "": {
+      "handlers": ["console_handler", "file_handler"],
+      "level": "DEBUG",
+      "propagate": false
+    }
+  }
+}
