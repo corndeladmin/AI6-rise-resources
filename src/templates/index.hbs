@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI6 Rise Resources</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; }
+        h1 { color: #333; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 0.5rem 0; }
+        a { text-decoration: none; color: #007acc; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Generated Snippets</h1>
+    <ul>
+        {{#each filesCreated}}
+            <li><a href="{{this.url}}">{{this.title}}</a></li>
+        {{/each}}
+    </ul>
+</body>
+</html>
