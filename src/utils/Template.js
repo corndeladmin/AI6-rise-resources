@@ -9,13 +9,12 @@ class Template {
     const templateFullPath = path.join(root, templateFile);
     try {
       const templateSource = readFileSync(templateFullPath, "utf8");
-      this.template = Handlebars.compile(templateSource);
+      this.template = Handlebars.compile(templateSource, { strict: true });
       console.log(`[Template] Loaded and compiled: ${templateFullPath}`);
     } catch (err) {
-      console.error(
+      throw new Error(
         `[Template] Failed to load or compile template "${templateFullPath}": ${err.message}`
       );
-      throw err;
     }
   }
 

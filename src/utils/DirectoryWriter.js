@@ -17,6 +17,10 @@ class DirectoryWriter {
   }
 
   write(fileName, fileContents) {
+    if (!fileName || !fileContents) {
+      throw new Error("File name and contents must be provided.");
+    }
+
     const filePath = path.join(this.directory, fileName);
     try {
       writeFileSync(filePath, fileContents);
