@@ -1,0 +1,29 @@
+{
+  "name": "a16-rise-resources",
+  "version": "1.0.0",
+  "description": "Code Syntax Highlighting tool ",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "vitest run",
+    "build": "node src/index.js",
+    "deploy": "gh-pages -d public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corndeladmin/A16-rise-resources.git"
+  },
+  "author": "corndeladmin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/corndeladmin/A16-rise-resources/issues"
+  },
+  "homepage": "https://github.com/corndeladmin/A16-rise-resources",
+  "dependencies": {
+    "handlebars": "^4.7.8"
+  },
+  "type": "module",
+  "devDependencies": {
+    "gh-pages": "^6.3.0",
+    "vitest": "^3.2.4"
+  }
+}
