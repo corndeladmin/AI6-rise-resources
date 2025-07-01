@@ -10,6 +10,7 @@ This project reads files from the `src/snippets` directory, processes them into 
 - Uses Handlebars templates for HTML generation
 - Outputs each snippet as a standalone HTML file in the `public` directory
 - Generates an `index.html` listing all generated snippets
+- Generates an `iframes.html` page with ready-to-copy iframe tags for each generated snippet
 - Supports syntax highlighting via https://highlightjs.org/
 - Easily extensible for new languages by adding a language folder and corresponding files to the `snippets` directory
 - Uses Highlight.js to change the theme change the CSS link in `snippet.hbs` to use a different highlight.js theme: https://cdnjs.com/libraries/highlight.js
@@ -70,3 +71,6 @@ This project uses Vitest (https://vitest.dev/) for testing. To run tests:
 ```sh
 npm test
 ```
+
+---
+
