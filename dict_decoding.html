@@ -1,0 +1,54 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dict decoding.py</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+    />
+  </head>
+  <body>
+    <pre>
+      <code class=python>import pandas as pd
+import numpy as np
+
+# Our Pokemon team data, where types are currently just codes
+pokemon_team &#x3D; pd.DataFrame(
+    {
+        &quot;Pokedex_Number&quot;: [1, 4, 7, 25, 6],
+        &quot;Type_Code&quot;: [&quot;GRS01&quot;, &quot;FIR02&quot;, &quot;WTR03&quot;, &quot;ELE04&quot;, &quot;FIR02&quot;],
+    }
+)
+
+# Pokemon Type Decoder Dictionary, translating codes to full names
+pokemon_type_decoder &#x3D; {
+    &quot;GRS01&quot;: &quot;Grass&quot;,
+    &quot;FIR02&quot;: &quot;Fire&quot;,
+    &quot;WTR03&quot;: &quot;Water&quot;,
+    &quot;ELE04&quot;: &quot;Electric&quot;,
+}
+
+# Series.map(): Used for substituting each value in a Series with another value, that may be derived from a function, a dict or a Series.
+pokemon_team[&quot;Type_Name&quot;] &#x3D; pokemon_team[&quot;Type_Code&quot;].map(pokemon_type_decoder)
+
+print(pokemon_team)
+
+#    Pokedex_Number Type_Code Type_Name
+# 0               1     GRS01     Grass
+# 1               4     FIR02      Fire
+# 2               7     WTR03     Water
+# 3              25     ELE04  Electric
+# 4               6     FIR02      Fire
+</code>
+    </pre>
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>

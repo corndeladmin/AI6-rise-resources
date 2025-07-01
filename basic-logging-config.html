@@ -1,0 +1,56 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>basic logging config.json</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+    />
+  </head>
+  <body>
+    <pre>
+      <code class=json>{
+  &quot;version&quot;: 1,
+  &quot;formatters&quot;: {
+    &quot;simple_console&quot;: {
+      &quot;format&quot;: &quot;%(levelname)s - %(message)s&quot;
+    },
+    &quot;file_detail&quot;: {
+      &quot;format&quot;: &quot;%(asctime)s - %(name)s - %(levelname)s - %(message)s&quot;
+    }
+  },
+  &quot;handlers&quot;: {
+    &quot;console_handler&quot;: {
+      &quot;class&quot;: &quot;logging.StreamHandler&quot;,
+      &quot;formatter&quot;: &quot;simple_console&quot;,
+      &quot;level&quot;: &quot;INFO&quot;
+    },
+    &quot;file_handler&quot;: {
+      &quot;class&quot;: &quot;logging.FileHandler&quot;,
+      &quot;formatter&quot;: &quot;file_detail&quot;,
+      &quot;filename&quot;: &quot;basic_config_log.log&quot;,
+      &quot;mode&quot;: &quot;a&quot;,
+      &quot;level&quot;: &quot;DEBUG&quot;
+    }
+  },
+  &quot;loggers&quot;: {
+    &quot;&quot;: {
+      &quot;handlers&quot;: [&quot;console_handler&quot;, &quot;file_handler&quot;],
+      &quot;level&quot;: &quot;DEBUG&quot;,
+      &quot;propagate&quot;: false
+    }
+  }
+}
+</code>
+    </pre>
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>

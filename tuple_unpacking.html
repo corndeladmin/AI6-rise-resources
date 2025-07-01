@@ -1,0 +1,38 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tuple unpacking.py</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+    />
+  </head>
+  <body>
+    <pre>
+      <code class=python>import numpy as np
+
+# Your raw list of quiz scores
+quiz_scores &#x3D; np.array([85, 92, 78, 85, 92, 78, 95, 85, 78, 92])
+
+# Use np.unique to get the unique scores and their frequencies
+# The function returns a tuple: (unique_values_array, counts_array)
+unique_scores, score_counts &#x3D; np.unique(quiz_scores, return_counts&#x3D;True)
+
+print(f&quot;Unique Scores Achieved: {unique_scores}&quot;)
+print(f&quot;Number of Students per Score: {score_counts}&quot;)
+
+# Output:
+# Unique Scores Achieved: [78 85 92 95]
+# Number of Students per Score: [3  3  3  1]</code>
+    </pre>
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>

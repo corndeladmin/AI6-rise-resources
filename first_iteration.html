@@ -1,0 +1,49 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>first iteration.py</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+    />
+  </head>
+  <body>
+    <pre>
+      <code class=python>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+cuisines: pd.DataFrame &#x3D; pd.read_csv(&quot;./cuisines.csv&quot;, index_col&#x3D;0)
+
+indian_cuisines: pd.DataFrame &#x3D; cuisines[cuisines[&quot;cuisine&quot;] &#x3D;&#x3D; &quot;indian&quot;]
+
+ingredient_counts_series: pd.Series &#x3D; indian_cuisines.T.drop([&quot;cuisine&quot;]).sum(axis&#x3D;1)
+
+indian_cuisine_counts: pd.DataFrame &#x3D; ingredient_counts_series.to_frame(&quot;value&quot;)
+
+indian_cuisine_present_ingredients: pd.DataFrame &#x3D; indian_cuisine_counts[
+    indian_cuisine_counts[&quot;value&quot;] !&#x3D; 0
+]
+
+sorted_indian_cuisine_ingredients: pd.DataFrame &#x3D; indian_cuisine_present_ingredients.sort_values(
+    by&#x3D;&quot;value&quot;, ascending&#x3D;False
+)
+
+sorted_indian_cuisine_ingredients.head(10).plot.barh(
+    title&#x3D;&quot;Top 10 Most Common Indian Ingredients&quot;
+)
+plt.xlabel(&quot;Count&quot;)
+plt.ylabel(&quot;Ingredient&quot;)
+plt.show()</code>
+    </pre>
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>second iteration.py</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+    />
+  </head>
+  <body>
+    <pre>
+      <code class=python>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def main():
+    cuisines_df: pd.DataFrame &#x3D; pd.read_csv(&quot;./cuisines.csv&quot;, index_col&#x3D;0)
+    target_cuisines: np.ndarray[str] &#x3D; cuisines_df[&quot;cuisine&quot;].unique()
+
+    for cuisine in target_cuisines:
+        sorted_cuisine_ingredients: pd.DataFrame &#x3D; get_sorted_cuisine_ingredients(
+            cuisines_df, cuisine
+        )
+        plot_cuisine_ingredients(sorted_cuisine_ingredients, cuisine)
+
+
+def get_sorted_cuisine_ingredients(
+    df: pd.DataFrame,
+    cuisine_name: str,
+) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;
+    Filters a DataFrame by cuisine and returns a sorted DataFrame of ingredient counts.
+    &quot;&quot;&quot;
+    filtered_by_cuisine &#x3D; df[df[&quot;cuisine&quot;].str.lower() &#x3D;&#x3D; cuisine_name.lower()]
+
+    ingredient_counts_series: pd.Series &#x3D; filtered_by_cuisine.T.drop([&quot;cuisine&quot;]).sum(
+        axis&#x3D;1
+    )
+    cuisine_counts: pd.DataFrame &#x3D; ingredient_counts_series.to_frame(&quot;value&quot;)
+
+    present_ingredients: pd.DataFrame &#x3D; cuisine_counts[cuisine_counts[&quot;value&quot;] !&#x3D; 0]
+
+    sorted_ingredients: pd.DataFrame &#x3D; present_ingredients.sort_values(
+        by&#x3D;&quot;value&quot;, ascending&#x3D;False
+    )
+
+    return sorted_ingredients
+
+
+def plot_cuisine_ingredients(
+    df_to_plot: pd.DataFrame, cuisine_name: str, top_n: int &#x3D; 10
+) -&gt; None:
+    &quot;&quot;&quot;
+    Plots the top N most common ingredients for a given cuisine.
+    &quot;&quot;&quot;
+    title: str &#x3D; f&quot;Top {top_n} Most Common {cuisine_name.capitalize()} Ingredients&quot;
+    df_to_plot.head(top_n).plot.barh(title&#x3D;title)
+    plt.xlabel(&quot;Count&quot;)
+    plt.ylabel(&quot;Ingredient&quot;)
+    plt.gca().invert_yaxis()
+    plt.show()
+
+
+if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
+    main()</code>
+    </pre>
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>

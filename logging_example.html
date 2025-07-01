@@ -1,0 +1,52 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>logging example.py</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+    />
+  </head>
+  <body>
+    <pre>
+      <code class=python>import logging
+import logging.config
+import json
+
+JSON_CONFIG_FILENAME &#x3D; &quot;basic-logging-config.json&quot;
+
+with open(JSON_CONFIG_FILENAME, &quot;r&quot;) as f:
+    config_dict &#x3D; json.load(f)
+    logging.config.dictConfig(config_dict)
+
+logger &#x3D; logging.getLogger(&quot;&quot;)
+
+print(&quot;\n--- Sending Log Messages ---&quot;)
+logger.debug(&quot;This is a DEBUG message. It should appear ONLY in the log file.&quot;)
+logger.info(
+    &quot;This is an INFO message. It should appear in the console AND the log file.&quot;
+)
+logger.warning(
+    &quot;This is a WARNING message. It should appear in the console AND the log file.&quot;
+)
+logger.error(&quot;This is an ERROR message. It indicates a significant problem.&quot;)
+
+print(&quot;\n--- Raise an Exception ---&quot;)
+try:
+    result &#x3D; 10 / 0
+except ZeroDivisionError as e:
+    logger.critical(f&quot;A CRITICAL error occurred: Division by zero! {e}&quot;, exc_info&#x3D;True)
+    # The exc_info&#x3D;True argument is key for logging the full traceback
+</code>
+    </pre>
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>

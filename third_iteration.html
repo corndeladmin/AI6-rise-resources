@@ -1,0 +1,147 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>third iteration.py</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+    />
+  </head>
+  <body>
+    <pre>
+      <code class=python>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import logging
+import logging.config
+import json
+from typing import Tuple
+
+
+LOGGING_CONFIG_FILE &#x3D; &quot;logging-config.json&quot;
+
+logger &#x3D; logging.getLogger(&quot;&quot;)
+
+
+def main():
+    logger.info(&quot;--- Cuisine Analysis Script Started ---&quot;)
+
+    try:
+        cuisines_df: pd.DataFrame &#x3D; pd.read_csv(&quot;./cuisines.csv&quot;, index_col&#x3D;0)
+        logger.info(&quot;Cuisines dataset loaded successfully.&quot;)
+    except Exception as e:
+        logger.critical(
+            f&quot;An unexpected error occurred while loading &#x27;cuisines.csv&#x27;: {e}&quot;,
+            exc_info&#x3D;True,
+        )
+        return
+
+    target_cuisines: Tuple[str, ...] &#x3D; tuple(cuisines_df[&quot;cuisine&quot;].unique()) + (
+        &quot;nonexistent_cuisine ;)&quot;,
+    )
+
+    logger.info(f&quot;Identified target cuisines: {&#x27;, &#x27;.join(target_cuisines)}&quot;)
+
+    for cuisine in target_cuisines:
+        logger.info(f&quot;Initiating analysis for cuisine: &#x27;{cuisine}&#x27;.&quot;)
+        sorted_cuisine_ingredients: pd.DataFrame &#x3D; get_sorted_cuisine_ingredients(
+            cuisines_df, cuisine
+        )
+
+        plot_cuisine_ingredients(sorted_cuisine_ingredients, cuisine)
+
+    logger.info(&quot;--- Cuisine Analysis Script Finished ---&quot;)
+
+
+def get_sorted_cuisine_ingredients(
+    df: pd.DataFrame,
+    cuisine_name: str,
+) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;
+    Filters a DataFrame by cuisine and returns a sorted DataFrame of ingredient counts.
+    &quot;&quot;&quot;
+    logger.info(f&quot;Processing ingredients for cuisine: &#x27;{cuisine_name}&#x27;.&quot;)
+
+    filtered_by_cuisine &#x3D; df[df[&quot;cuisine&quot;].str.lower() &#x3D;&#x3D; cuisine_name.lower()]
+
+    if filtered_by_cuisine.empty:
+        logger.warning(
+            f&quot;No data found for cuisine: &#x27;{cuisine_name}&#x27;. Returning empty DataFrame.&quot;
+        )
+        return pd.DataFrame()
+
+    logger.debug(f&quot;Found {len(filtered_by_cuisine)} rows for &#x27;{cuisine_name}&#x27;.&quot;)
+
+    ingredient_counts_series: pd.Series &#x3D; filtered_by_cuisine.T.drop(
+        [&quot;cuisine&quot;], errors&#x3D;&quot;ignore&quot;
+    ).sum(axis&#x3D;1)
+    cuisine_counts: pd.DataFrame &#x3D; ingredient_counts_series.to_frame(&quot;value&quot;)
+
+    present_ingredients: pd.DataFrame &#x3D; cuisine_counts[cuisine_counts[&quot;value&quot;] !&#x3D; 0]
+    logger.debug(
+        f&quot;Identified {len(present_ingredients)} present ingredients for &#x27;{cuisine_name}&#x27;.&quot;
+    )
+
+    sorted_ingredients: pd.DataFrame &#x3D; present_ingredients.sort_values(
+        by&#x3D;&quot;value&quot;, ascending&#x3D;False
+    )
+
+    logger.info(f&quot;Successfully sorted ingredients for &#x27;{cuisine_name}&#x27;.&quot;)
+
+    return sorted_ingredients
+
+
+def plot_cuisine_ingredients(
+    df_to_plot: pd.DataFrame, cuisine_name: str, top_n: int &#x3D; 10
+) -&gt; None:
+    &quot;&quot;&quot;
+    Plots the top N most common ingredients for a given cuisine.
+    &quot;&quot;&quot;
+    logger.info(f&quot;Attempting to plot top {top_n} ingredients for &#x27;{cuisine_name}&#x27;.&quot;)
+
+    if df_to_plot.empty:
+        logger.warning(
+            f&quot;Skipping plot for &#x27;{cuisine_name}&#x27;: DataFrame to plot is empty.&quot;
+        )
+        return
+
+    title: str &#x3D; f&quot;Top {top_n} Most Common {cuisine_name.capitalize()} Ingredients&quot;
+
+    try:
+        df_to_plot.head(top_n).plot.barh(title&#x3D;title)
+        plt.xlabel(&quot;Count&quot;)
+        plt.ylabel(&quot;Ingredient&quot;)
+        plt.gca().invert_yaxis()
+        plt.show()
+        logger.info(f&quot;Plot displayed successfully for &#x27;{cuisine_name}&#x27;.&quot;)
+    except Exception as e:
+        logger.error(
+            f&quot;Failed to plot ingredients for &#x27;{cuisine_name}&#x27;: {e}&quot;, exc_info&#x3D;True
+        )
+
+
+if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
+
+    try:
+        with open(LOGGING_CONFIG_FILE, &quot;r&quot;) as f:
+            config_dict &#x3D; json.load(f)
+        logging.config.dictConfig(config_dict)
+        logger.info(f&quot;Logging configured successfully from {LOGGING_CONFIG_FILE}.&quot;)
+    except Exception as e:
+        print(f&quot;An unexpected error occurred during logging setup: {e}&quot;)
+        exit(1)
+
+    main()
+</code>
+    </pre>
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>
