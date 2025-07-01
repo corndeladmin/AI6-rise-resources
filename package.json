@@ -4,19 +4,22 @@
   "description": "Code Syntax Highlighting tool ",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node src/index.js",
+    "deploy": "gh-pages -d public"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/corndeladmin/A16-rise-resources.git"
   },
-  "author": "",
+  "author": "corndeladmin",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/corndeladmin/A16-rise-resources/issues"
   },
-  "homepage": "https://github.com/corndeladmin/A16-rise-resources#readme",
+  "homepage": "https://github.com/corndeladmin/A16-rise-resources",
   "dependencies": {
+    "gh-pages": "^6.3.0",
     "handlebars": "^4.7.8"
   },
   "type": "module"
