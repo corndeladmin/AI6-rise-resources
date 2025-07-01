@@ -20,6 +20,10 @@ files.forEach((file) => {
   snippetGenerator.filesRead.forEach((fileRead) => filesCreated.push(fileRead));
 });
 
-const indexTemplate = new Template("index.hbs");
-const populatedTemplate = indexTemplate.compile({ filesCreated });
-publicWriter.write("index.html", populatedTemplate);
+const summaryTemplateFiles = ["index", "iframes"];
+
+summaryTemplateFiles.forEach((file) => {
+  const template = new Template(`${file}.hbs`);
+  const populatedTemplate = template.compile({ filesCreated });
+  publicWriter.write(`${file}.html`, populatedTemplate);
+});
