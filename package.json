@@ -19,8 +19,10 @@
   },
   "homepage": "https://github.com/corndeladmin/A16-rise-resources",
   "dependencies": {
-    "gh-pages": "^6.3.0",
     "handlebars": "^4.7.8"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
 }
