@@ -1,67 +1,48 @@
-# A16-rise-resources
+# AI6-rise-resources
 
-A Node.js tool for generating syntax-highlighted HTML code snippets from source code files using Handlebars templates.
+A Node.js tool for generating syntax-highlighted HTML code snippets for use in RISE modules.
 
-This project reads files from the `src/snippets` directory, processes them into HTML with syntax highlighting, and outputs them to a `public` directory, along with an index page.
+## How It Works
 
-## Features
+- Place formatted code files in `src/snippets/` (group by language).
+- On build each file is converted to a standalone, syntax-highlighted (based on language) HTML snippet using Handlebars and [Highlight.js](https://highlightjs.org/).
+- On build output is written to the `public/` directory, including an `index.html` and an `iframes.html` with ready-to-copy iframe tags.
 
-- Reads code snippets from the `src/snippets` directory
-- Uses Handlebars templates for HTML generation
-- Outputs each snippet as a standalone HTML file in the `public` directory
-- Generates an `index.html` listing all generated snippets
-- Generates an `iframes.html` page with ready-to-copy iframe tags for each generated snippet
-- Supports syntax highlighting via https://highlightjs.org/
-- Easily extensible for new languages by adding a language folder and corresponding files to the `snippets` directory
-- Uses Highlight.js to change the theme change the CSS link in `snippet.hbs` to use a different highlight.js theme: https://cdnjs.com/libraries/highlight.js
+## Contributing Snippets
 
-## Usage
+_Do not delete existing snippets unless 100% sure as they are used in live modules._
 
-### 1. Install dependencies
+1. **Create a branch** for your snippets.
+2. **Add your code snippets** to `src/snippets/` (create a subfolder for your language if not already present).
 
-```sh
-npm install
-```
+- To view locally run `npm build` to generate `public`.
 
-### 2. Add your code snippets
+3. **Open a Pull Request** to `main`.
 
-Place your code files in the `src/snippets` directory. Each file will be processed into an HTML snippet.
+On merge, a **GitHub Action** will:
 
-### 3. Build the HTML output
+- Build the HTML output.
+- Deploy the `public/` directory to the `gh-pages` branch.
+  - If broken and as a last resort there is a manual deploy script `npm run build`
 
-```sh
-npm run build
-```
-
-This will generate HTML files for each snippet in the `public` directory and create an `index.html` page listing them.
-
-### 4. Deploy to GitHub Pages
-
-To publish your generated HTML files to GitHub Pages, use the deploy script:
-
-```sh
-npm run deploy
-```
-
-This will push the contents of the `public` directory to the `gh-pages` branch of the repository, making your snippets available online to add as a resource to a Rise module.
-
-> **Todo:**  
-> This process is manual at the moment, but I’d love to automate it with GitHub Actions when time allows.
+Your snippets will then be available online for embedding in RISE modules.
 
 ## Project Structure
 
 ```
 src/
-  index.js                # Main script for processing snippets
-  snippets/               # Place your code files here
-  templates/
-    snippet.hbs           # Handlebars template for individual snippets
-    index.hbs             # Handlebars template for the index page
-  utils/
-    DirectoryWriter.js    # Handles writing files/directories
-    Template.js           # Loads and compiles Handlebars templates
-    SnippetGenerator.js   # Processes snippet files into HTML
-public/                   # Output directory for generated HTML
+  snippets/         # Add your code files here
+  templates/        # Handlebars templates
+  utils/            # Build utilities
+  index.js          # Main script for processing snippets
+public/             # Generated HTML output (auto-deployed)
+```
+
+## Local Development
+
+```sh
+npm install
+npm run build
 ```
 
 ## Testing
@@ -72,5 +53,15 @@ This project uses Vitest (https://vitest.dev/) for testing. To run tests:
 npm test
 ```
 
----
+## Changing Editor styles
 
+- The current editor theme is Highlight.js GitHub Dark. To use a different theme, update the CSS link in `snippet.hbs`:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+/>
+```
+
+---
