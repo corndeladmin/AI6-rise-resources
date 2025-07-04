@@ -25,15 +25,14 @@ class SnippetGenerator {
       const fileLocation = path.join(this.folderLocation, file);
       try {
         const content = readFileSync(fileLocation, "utf-8");
-        const title = file.replace(/[-_]/g, " ");
         const populatedTemplate = this.template.compile({
-          title,
+          title: file,
           content,
           language: this.folder,
         });
 
         const fileName = `${path.parse(file).name}.html`;
-        this.filesRead.push({ title, url: fileName });
+        this.filesRead.push({ title: file, url: fileName });
         this.outputWriter.write(fileName, populatedTemplate);
         console.log(
           `[SnippetGenerator] Processed: ${fileLocation} -> ${fileName}`

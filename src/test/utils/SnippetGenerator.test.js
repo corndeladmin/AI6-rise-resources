@@ -15,7 +15,7 @@ describe("SnippetGenerator", () => {
 
   it("should generate filesRead", () => {
     const expectedFilesRead = [
-      { title: "test file.py", url: "test_file.html" },
+      { title: "test_file.py", url: "test_file.html" },
     ];
 
     const generator = new SnippetGenerator(
@@ -41,14 +41,14 @@ describe("SnippetGenerator", () => {
     generator.process();
 
     expect(mockTemplate.compile).toHaveBeenCalledWith({
-      title: "test file.py",
+      title: "test_file.py",
       content: 'print("Hello, world!")',
       language: "snippets",
     });
 
     expect(outputWriter.write).toHaveBeenCalledWith(
       "test_file.html",
-      '<html><head><title>test file.py</title></head><body><p class="snippets">print("Hello, world!")</p></body></html>'
+      '<html><head><title>test_file.py</title></head><body><p class="snippets">print("Hello, world!")</p></body></html>'
     );
   });
 });
