@@ -3,15 +3,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def main():
+def main() -> None:
+    # Load the dataset
     cuisines_df: pd.DataFrame = pd.read_csv("./cuisines.csv", index_col=0)
+
+    # Get the list of unique cuisines
     target_cuisines: np.ndarray[str] = cuisines_df["cuisine"].unique()
 
+    # For each cuisine, process and plot ingredient data
     for cuisine in target_cuisines:
-        sorted_cuisine_ingredients: pd.DataFrame = get_sorted_cuisine_ingredients(
+        sorted_ingredients: pd.DataFrame = get_sorted_cuisine_ingredients(
             cuisines_df, cuisine
         )
-        plot_cuisine_ingredients(sorted_cuisine_ingredients, cuisine)
+        plot_cuisine_ingredients(sorted_ingredients, cuisine)
 
 
 def get_sorted_cuisine_ingredients(
@@ -21,18 +25,25 @@ def get_sorted_cuisine_ingredients(
     """
     Filters a DataFrame by cuisine and returns a sorted DataFrame of ingredient counts.
     """
-    filtered_by_cuisine = df[df["cuisine"].str.lower() == cuisine_name.lower()]
+    # Filter rows matching the given cuisine (case-insensitive)
+    filtered = df[df["cuisine"].str.lower() == cuisine_name.lower()]
 
-    ingredient_counts_series: pd.Series = filtered_by_cuisine.T.drop(["cuisine"]).sum(
-        axis=1
+    # Sum the ingredient counts, dropping the 'cuisine' column
+    ingredient_totals: pd.Series = (
+        filtered
+        .T
+        .drop(["cuisine"])
+        .sum(axis=1)
     )
-    cuisine_counts: pd.DataFrame = ingredient_counts_series.to_frame("value")
 
-    present_ingredients: pd.DataFrame = cuisine_counts[cuisine_counts["value"] != 0]
+    # Convert to DataFrame for plotting
+    counts_df: pd.DataFrame = ingredient_totals.to_frame(name="value")
 
-    sorted_ingredients: pd.DataFrame = present_ingredients.sort_values(
-        by="value", ascending=False
-    )
+    # Keep only ingredients that are actually used
+    present_ingredients: pd.DataFrame = counts_df[counts_df["value"] != 0]
+
+    # Sort by frequency
+    sorted_ingredients = present_ingredients.sort_values(by="value", ascending=False)
 
     return sorted_ingredients
 
@@ -43,7 +54,10 @@ def plot_cuisine_ingredients(
     """
     Plots the top N most common ingredients for a given cuisine.
     """
+    # Get plot title
     title: str = f"Top {top_n} Most Common {cuisine_name.capitalize()} Ingredients"
+
+    # Plot horizontal bar chart
     df_to_plot.head(top_n).plot.barh(title=title)
     plt.xlabel("Count")
     plt.ylabel("Ingredient")
