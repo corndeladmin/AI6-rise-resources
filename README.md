@@ -31,6 +31,7 @@ Your snippets will then be available online for embedding in RISE modules.
 
 ```
 src/
+  module-projects   # Store Specific Projects Related to Modules 
   snippets/         # Add your code files here
   templates/        # Handlebars templates
   utils/            # Build utilities
@@ -53,15 +54,8 @@ This project uses Vitest (https://vitest.dev/) for testing. To run tests:
 npm test
 ```
 
-## Changing Editor styles
+## module-projects
 
-- The current editor theme is Highlight.js GitHub Dark. To use a different theme, update the CSS link in `snippet.hbs`:
-
-```html
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
-/>
-```
+This is a folder to keep any module specific source code that is not large enough to be its own repository.
 
 ---
