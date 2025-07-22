@@ -1,0 +1,146 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TextClassifier.py</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-light.min.css"
+      id="code-theme"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+    ></script>
+
+    <style>
+      .switch { position: relative; display: inline-block; width: 50px; height:
+      28px; } .switch input { opacity: 0; width: 0; height: 0; } .slider {
+      position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc; -webkit-transition: 0.4s; transition: 0.4s; }
+      .slider:before { position: absolute; content: ""; height: 20px; width:
+      20px; left: 4px; bottom: 4px; background-color: white; -webkit-transition:
+      0.4s; transition: 0.4s; } input:checked + .slider { background-color:
+      #282c34; } input:focus + .slider { box-shadow: 0 0 1px #282c34; }
+      input:checked + .slider:before { -webkit-transform: translateX(20px);
+      -ms-transform: translateX(20px); transform: translateX(20px); } .slider.round { border-radius: 28px; } .slider.round:before {
+      border-radius: 50%; } .summary { display: flex; font-family: Arial,
+      sans-serif; font-size: 16px; color: #333; align-items: center; gap: 10px;
+      justify-content: space-between; } .summary-toggle { display: flex; gap:
+      10px; align-items: center;} pre { margin: 0; height: fit-content; }
+
+    </style>
+  </head>
+  <body>
+    <div class="summary">
+      <p><em>TextClassifier.py</em></p>
+      <div class="summary-toggle">
+        <p>Toggle Theme</p>
+        <label class="switch">
+          <input type="checkbox" id="checkbox" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+    <pre>
+      <code class=python>import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+import re
+import logging
+
+# Configure basic logging for demonstration
+logging.basicConfig(
+    level&#x3D;logging.INFO, format&#x3D;&quot;%(asctime)s - %(levelname)s - %(message)s&quot;
+)
+
+
+class TextClassifier:
+    &quot;&quot;&quot;
+    A simple text classification pipeline.
+    &quot;&quot;&quot;
+
+    def __init__(self):
+        self.vectorizer &#x3D; CountVectorizer()
+        self.model &#x3D; LogisticRegression(max_iter&#x3D;1000)
+        logging.info(&quot;TextClassifier initialized.&quot;)
+
+    def preprocess_text(self, text: str) -&gt; str:
+        &quot;&quot;&quot;
+        Cleans and normalizes a single text string.
+        - Lowercases text
+        - Removes non-alphanumeric characters (keeping spaces)
+        &quot;&quot;&quot;
+        logging.debug(f&quot;Preprocessing text: &#x27;{text}&#x27;&quot;)
+        text &#x3D; text.lower()
+        non_alphabetical_characters &#x3D; r&quot;[^a-z\s]&quot;
+        text &#x3D; re.sub(non_alphabetical_characters, &quot;&quot;, text)
+        text &#x3D; &quot; &quot;.join(text.split())
+        logging.debug(f&quot;Preprocessed text: &#x27;{text}&#x27;&quot;)
+        return text
+
+    def train(self, texts: list[str], labels: list[str]):
+        &quot;&quot;&quot;
+        Trains the classification model.
+        &quot;&quot;&quot;
+        logging.info(&quot;Starting model training.&quot;)
+        # Preprocess all texts
+        processed_texts &#x3D; [self.preprocess_text(text) for text in texts]
+
+        # Fit vectorizer and transform texts
+        X &#x3D; self.vectorizer.fit_transform(processed_texts)
+        y &#x3D; labels
+
+        # Train the model
+        self.model.fit(X, y)
+        logging.info(&quot;Model training completed.&quot;)
+
+    def predict(self, texts: list[str]) -&gt; list[str]:
+        &quot;&quot;&quot;
+        Makes predictions on new text data.
+        &quot;&quot;&quot;
+        logging.info(&quot;Starting prediction.&quot;)
+        # Preprocess new texts
+        processed_texts &#x3D; [self.preprocess_text(text) for text in texts]
+
+        # Transform texts using the fitted vectorizer
+        X_new &#x3D; self.vectorizer.transform(processed_texts)
+
+        # Make predictions
+        predictions &#x3D; self.model.predict(X_new).tolist()
+        logging.info(&quot;Prediction completed.&quot;)
+        return predictions
+
+    def evaluate(self, texts: list[str], true_labels: list[str]) -&gt; float:
+        &quot;&quot;&quot;
+        Evaluates the model&#x27;s accuracy.
+        &quot;&quot;&quot;
+        logging.info(&quot;Starting model evaluation.&quot;)
+        predictions &#x3D; self.predict(texts)
+        score &#x3D; accuracy_score(true_labels, predictions)
+        logging.info(f&quot;Model accuracy: {score:.4f}&quot;)
+        return score
+</code>
+    </pre>
+    <script>hljs.highlightAll();</script>
+    <script>
+      const LIGHT_THEME =
+      'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-light.min.css';
+      const DARK_THEME =
+      'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css';
+      const toggleButton = document.getElementById('checkbox'); const codeTheme
+      = document.getElementById('code-theme');
+      toggleButton.addEventListener('click', () => { if
+      (codeTheme.getAttribute('href') === LIGHT_THEME) { codeTheme.setAttribute(
+      'href', DARK_THEME ); } else { codeTheme.setAttribute( 'href', LIGHT_THEME
+      ); } });
+    </script>
+  </body>
+</html>
