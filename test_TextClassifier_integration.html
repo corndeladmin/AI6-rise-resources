@@ -1,0 +1,110 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test_TextClassifier_integration.py</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-light.min.css"
+      id="code-theme"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+    ></script>
+
+    <style>
+      .switch { position: relative; display: inline-block; width: 50px; height:
+      28px; } .switch input { opacity: 0; width: 0; height: 0; } .slider {
+      position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc; -webkit-transition: 0.4s; transition: 0.4s; }
+      .slider:before { position: absolute; content: ""; height: 20px; width:
+      20px; left: 4px; bottom: 4px; background-color: white; -webkit-transition:
+      0.4s; transition: 0.4s; } input:checked + .slider { background-color:
+      #282c34; } input:focus + .slider { box-shadow: 0 0 1px #282c34; }
+      input:checked + .slider:before { -webkit-transform: translateX(20px);
+      -ms-transform: translateX(20px); transform: translateX(20px); } .slider.round { border-radius: 28px; } .slider.round:before {
+      border-radius: 50%; } .summary { display: flex; font-family: Arial,
+      sans-serif; font-size: 16px; color: #333; align-items: center; gap: 10px;
+      justify-content: space-between; } .summary-toggle { display: flex; gap:
+      10px; align-items: center;} pre { margin: 0; height: fit-content; }
+
+    </style>
+  </head>
+  <body>
+    <div class="summary">
+      <p><em>test_TextClassifier_integration.py</em></p>
+      <div class="summary-toggle">
+        <p>Toggle Theme</p>
+        <label class="switch">
+          <input type="checkbox" id="checkbox" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+    <pre>
+      <code class=python>from sklearn.metrics import accuracy_score
+
+
+def test_end_to_end_pipeline_integration(trained_classifier):
+    &quot;&quot;&quot;
+    Integration test for the full text classification pipeline.
+    Tests data preprocessing, vectorization, and prediction working together.
+    Instead of exact prediction match, checks if accuracy is above a threshold.
+    &quot;&quot;&quot;
+    # Simulate new raw input data
+    new_raw_texts &#x3D; [
+        &quot;This movie was truly fantastic!&quot;,
+        &quot;I absolutely hated the ending.&quot;,
+        &quot;It was okay, nothing special.&quot;,
+        &quot;A brilliant and engaging story.&quot;,
+        &quot;The best product I&#x27;ve ever used.&quot;,
+        &quot;Completely awful, do not recommend.&quot;,
+    ]
+
+    # True labels for the integration test data to calculate accuracy
+    true_integration_labels &#x3D; [
+        &quot;positive&quot;,
+        &quot;negative&quot;,
+        &quot;positive&quot;,
+        &quot;positive&quot;,
+        &quot;positive&quot;,
+        &quot;negative&quot;,
+    ]
+
+    # Run the full prediction pipeline to get actual predictions
+    actual_predictions &#x3D; trained_classifier.predict(new_raw_texts)
+
+    # Calculate accuracy for the integration test
+    integration_accuracy &#x3D; accuracy_score(true_integration_labels, actual_predictions)
+
+    # Set a threshold for acceptable integration performance
+    expected_min_integration_accuracy &#x3D; (
+        0.65  # Adjust based on expected model performance
+    )
+
+    assert (
+        integration_accuracy &gt;&#x3D; expected_min_integration_accuracy
+    ), f&quot;Integration test accuracy dropped to {integration_accuracy:.2f}, expected &gt;&#x3D; {expected_min_integration_accuracy:.2f}&quot;
+</code>
+    </pre>
+    <script>hljs.highlightAll();</script>
+    <script>
+      const LIGHT_THEME =
+      'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-light.min.css';
+      const DARK_THEME =
+      'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css';
+      const toggleButton = document.getElementById('checkbox'); const codeTheme
+      = document.getElementById('code-theme');
+      toggleButton.addEventListener('click', () => { if
+      (codeTheme.getAttribute('href') === LIGHT_THEME) { codeTheme.setAttribute(
+      'href', DARK_THEME ); } else { codeTheme.setAttribute( 'href', LIGHT_THEME
+      ); } });
+    </script>
+  </body>
+</html>
