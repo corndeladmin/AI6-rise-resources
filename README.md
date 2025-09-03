@@ -15,7 +15,7 @@ _Do not delete existing snippets unless 100% sure as they are used in live modul
 1. **Create a branch** for your snippets.
 2. **Add your code snippets** to `src/snippets/` (create a subfolder for your language if not already present).
 
-- To view locally run `npm build` to generate `public`.
+- To view locally run `npm run build` to generate `public`.
 
 3. **Open a Pull Request** to `main`.
 
