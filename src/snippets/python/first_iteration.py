@@ -1,26 +1,16 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 
-cuisines: pd.DataFrame = pd.read_csv("./cuisines.csv", index_col=0)
+cuisines: pd.DataFrame = pd.read_csv("./cuisines.csv")
 
 indian_cuisines: pd.DataFrame = cuisines[cuisines["cuisine"] == "indian"]
 
-ingredient_counts_series: pd.Series = indian_cuisines.T.drop(["cuisine"]).sum(axis=1)
+indian_cuisine_ingredient_counts: pd.Series = indian_cuisines.groupby("ingredient").size()
 
-indian_cuisine_counts: pd.DataFrame = ingredient_counts_series.to_frame("value")
+sorted_ingredients: pd.Series = indian_cuisine_ingredient_counts.sort_values(ascending=False)
 
-indian_cuisine_present_ingredients: pd.DataFrame = indian_cuisine_counts[
-    indian_cuisine_counts["value"] != 0
-]
-
-sorted_indian_cuisine_ingredients: pd.DataFrame = indian_cuisine_present_ingredients.sort_values(
-    by="value", ascending=False
-)
-
-sorted_indian_cuisine_ingredients.head(10).plot.barh(
-    title="Top 10 Most Common Indian Ingredients"
-)
+sorted_ingredients.head(10).plot.barh(title="Top 10 Most Common Indian Ingredients")
 plt.xlabel("Count")
 plt.ylabel("Ingredient")
+plt.gca().invert_yaxis()
 plt.show()
